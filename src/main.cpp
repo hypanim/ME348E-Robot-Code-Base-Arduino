@@ -1,0 +1,78 @@
+#include <Arduino.h>
+#include "motorControl.h"
+
+motorControl controller;
+encoderStruct reading;
+
+//function prototype:
+void serialCommunicate();
+
+void setup() {
+  Serial.begin(115200);
+  controller.setup();
+  while (!Serial) {
+    ;  // Wait for the serial port to be ready
+  }
+}
+
+void loop() {
+  // reading = controller.iterateMotion(150, 150, 150, 150);
+  // Serial.println(reading.encoder1);
+  // Serial.println(reading.encoder2);
+  // Serial.println(reading.encoder3);
+  // Serial.println(reading.encoder4);
+  // delay(1000);
+  // reading = controller.iterateMotion(0, 0, 0, 0);
+  // Serial.println(reading.encoder1);
+  // Serial.println(reading.encoder2);
+  // Serial.println(reading.encoder3);
+  // Serial.println(reading.encoder4);
+  // delay(1000);
+  // reading = controller.iterateMotion(-150, -150, -150, -150);
+  // Serial.println(reading.encoder1);
+  // Serial.println(reading.encoder2);
+  // Serial.println(reading.encoder3);
+  // Serial.println(reading.encoder4);
+  // delay(1000);
+  // reading = controller.iterateMotion(0, 0, 0, 0);
+  // Serial.println(reading.encoder1);
+  // Serial.println(reading.encoder2);
+  // Serial.println(reading.encoder3);
+  // Serial.println(reading.encoder4);
+  // delay(1000);
+  serialCommunicate();
+}
+
+void serialCommunicate(){
+  if (Serial.available() > 0) {
+    String inputString = Serial.readStringUntil('\n');  // Read until newline
+
+    // Separate the comma-separated values
+    int values[4];
+    int currentIndex = 0;
+    int commaIndex = inputString.indexOf(',');
+    while (commaIndex != -1) {
+      values[currentIndex] = inputString.substring(0, commaIndex).toInt();
+      inputString = inputString.substring(commaIndex + 1);
+      commaIndex = inputString.indexOf(',');
+      currentIndex++;
+    }
+
+    // Handle the last value
+    if (currentIndex < 4) {
+      values[currentIndex] = inputString.toInt();
+    }
+
+  //interfacing with the motor
+  reading = controller.iterateMotion(values[0], values[1], values[2], values[3]);
+
+  Serial.print(reading.encoder1);
+  Serial.print(',');
+  Serial.print(reading.encoder2);
+  Serial.print(',');
+  Serial.print(reading.encoder3);
+  Serial.print(',');
+  Serial.print(reading.encoder4);
+  Serial.println();
+  }
+}
