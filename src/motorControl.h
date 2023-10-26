@@ -23,10 +23,10 @@ protected:
     int encoderP1B = 4;
     int encoderP2A = 3;
     int encoderP2B = 5;
-    int encoderP3A = 14;
-    int encoderP3B = 18;
-    int encoderP4A = 15;
-    int encoderP4B = 19;
+    int encoderP3A = 15;
+    int encoderP3B = 19;
+    int encoderP4A = 14;
+    int encoderP4B = 18;
     Encoder encoder1;
     Encoder encoder2;
     Encoder encoder3;
