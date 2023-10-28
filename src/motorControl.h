@@ -30,10 +30,20 @@ protected:
     int IN2_B = 9;
     int IN3_B = 10;
     int IN4_B = 11;
+    int IN1_C = 4; 
+    int IN2_C = 5;
+    int IN3_C = 6;
+    int IN4_C = 7;
+    int IN1_D = 31; 
+    int IN2_D = 30;
+    int IN3_D = 29;
+    int IN4_D = 28;
 
     //declaring stepper objects
     AccelStepper stepper1; 
     AccelStepper stepper2;
+    AccelStepper stepper3;
+    AccelStepper stepper4;
 };
 
 #endif
