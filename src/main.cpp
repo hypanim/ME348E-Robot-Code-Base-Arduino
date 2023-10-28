@@ -2,7 +2,7 @@
 #include "motorControl.h"
 
 motorControl controller;
-encoderStruct reading;
+stepStruct reading;
 
 //function prototype:
 void serialCommunicate();
@@ -62,17 +62,21 @@ void serialCommunicate(){
     if (currentIndex < 4) {
       values[currentIndex] = inputString.toInt();
     }
-
-  //interfacing with the motor
-  reading = controller.iterateMotion(values[0], values[1], values[2], values[3]);
-
-  Serial.print(reading.encoder1);
-  Serial.print(',');
-  Serial.print(reading.encoder2);
-  Serial.print(',');
-  Serial.print(reading.encoder3);
-  Serial.print(',');
-  Serial.print(reading.encoder4);
-  Serial.println();
+  
+    //write the values to the arduino
+    controller.updateMotors(values[0], values[1], values[2], values[3]);
   }
+  //read from the motor
+  reading = controller.readSteppers();
+  Serial.print(reading.step1);
+  Serial.print(',');
+  Serial.print(reading.step2);
+  Serial.print(',');
+  Serial.print(reading.step3);
+  Serial.print(',');
+  Serial.print(reading.step4);
+  Serial.println();
+
+  //move steps
+  controller.iterateMotion();
 }
