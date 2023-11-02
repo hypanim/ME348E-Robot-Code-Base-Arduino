@@ -19,7 +19,7 @@ protected:
 
     //motor constants
     float maxSpeed = 1000;
-    float acceleration = 5000;
+    float acceleration = 1000;
     
     //motors
     int IN1_A = 25; 
