@@ -6,6 +6,9 @@ motorControl controller;
 shooting shooter
 stepStruct reading;
 
+//previous count for shooting to ensure fire one puck at a time
+int prevCount = 0;
+
 //function prototype:
 void serialCommunicate();
 
@@ -49,7 +52,7 @@ void loop() {
 void serialCommunicate(){
   if (Serial.available() > 0) {
     String inputString = Serial.readStringUntil('\n');  // Read until newline
-
+    
     // Separate the comma-separated values
     int values[5];
     int currentIndex = 0;
@@ -70,10 +73,9 @@ void serialCommunicate(){
     controller.updateMotors(values[0], values[1], values[2], values[3]);
 
     //loading and shooting values write to arduino
-    values[4];
-    if(values[4] == 1){
+    if(values[4] > prevCount){
       shooter.shoot();
-      values[4] = 0;
+      prevCount = values[4] = 0;
     }
   }
   //read from the motor
