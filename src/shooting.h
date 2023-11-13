@@ -21,6 +21,8 @@ protected:
     int IN2 = ;//2
     int IN3 = ;//3
     int IN4 = ;//4
+
+    Stepper myStepper;// Declare Stepper instance as a member variable
 };
 
 #endif
