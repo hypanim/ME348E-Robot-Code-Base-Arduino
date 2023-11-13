@@ -1,7 +1,9 @@
 #include <Arduino.h>
 #include "motorControl.h"
+#include "shooting.h"
 
 motorControl controller;
+shooting shooter
 stepStruct reading;
 
 //function prototype:
@@ -10,6 +12,7 @@ void serialCommunicate();
 void setup() {
   Serial.begin(115200);
   controller.setup();
+  shooter.setup();
   while (!Serial) {
     ;  // Wait for the serial port to be ready
   }
@@ -48,7 +51,7 @@ void serialCommunicate(){
     String inputString = Serial.readStringUntil('\n');  // Read until newline
 
     // Separate the comma-separated values
-    int values[4];
+    int values[5];
     int currentIndex = 0;
     int commaIndex = inputString.indexOf(',');
     while (commaIndex != -1) {
@@ -59,12 +62,19 @@ void serialCommunicate(){
     }
 
     // Handle the last value
-    if (currentIndex < 4) {
+    if (currentIndex < 5) {
       values[currentIndex] = inputString.toInt();
     }
   
     //write the values to the arduino
     controller.updateMotors(values[0], values[1], values[2], values[3]);
+
+    //loading and shooting values write to arduino
+    values[4];
+    if(values[4] == 1){
+      shooter.shoot();
+      values[4] = 0;
+    }
   }
   //read from the motor
   reading = controller.readSteppers();
