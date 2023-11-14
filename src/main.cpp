@@ -3,7 +3,7 @@
 #include "shooting.h"
 
 motorControl controller;
-shooting shooter
+shooting shooter;
 stepStruct reading;
 
 //previous count for shooting to ensure fire one puck at a time
