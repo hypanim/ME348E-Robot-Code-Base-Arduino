@@ -17,11 +17,13 @@ void shooting::setup() {
 void shooting::shoot(){
     //Shooting Code, may need to adjust delays
     digitalWrite(Solenoid, HIGH); 
-    myStepper.step(-125);     //Switch Solenoid ON
+    delay(100);
+    digitalWrite(Solenoid, LOW); 
+    myStepper.step(-130);     //Switch Solenoid ON
     //delay(100);                          
-    digitalWrite(Solenoid, LOW);       //Switch Solenoid OFF
+          //Switch Solenoid OFF
     //Reload code
     //need to verify rotation duration/trial&error?
     //delay(300);
-    myStepper.step(125);
+    myStepper.step(130);
 }
