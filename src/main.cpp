@@ -1,8 +1,13 @@
 #include <Arduino.h>
 #include "motorControl.h"
+#include "shooting.h"
 
 motorControl controller;
+shooting shooter;
 stepStruct reading;
+
+//previous count for shooting to ensure fire one puck at a time
+int prevCount = 0;
 
 //function prototype:
 void serialCommunicate();
@@ -10,6 +15,7 @@ void serialCommunicate();
 void setup() {
   Serial.begin(115200);
   controller.setup();
+  shooter.setup();
   while (!Serial) {
     ;  // Wait for the serial port to be ready
   }
@@ -46,9 +52,9 @@ void loop() {
 void serialCommunicate(){
   if (Serial.available() > 0) {
     String inputString = Serial.readStringUntil('\n');  // Read until newline
-
+    
     // Separate the comma-separated values
-    int values[4];
+    int values[5];
     int currentIndex = 0;
     int commaIndex = inputString.indexOf(',');
     while (commaIndex != -1) {
@@ -59,12 +65,18 @@ void serialCommunicate(){
     }
 
     // Handle the last value
-    if (currentIndex < 4) {
+    if (currentIndex < 5) {
       values[currentIndex] = inputString.toInt();
     }
   
     //write the values to the arduino
     controller.updateMotors(values[0], values[1], values[2], values[3]);
+
+    //loading and shooting values write to arduino
+    if(values[4] > prevCount){
+      shooter.shoot();
+      prevCount = values[4];
+    }
   }
   //read from the motor
   reading = controller.readSteppers();
@@ -75,6 +87,8 @@ void serialCommunicate(){
   Serial.print(reading.step3);
   Serial.print(',');
   Serial.print(reading.step4);
+  Serial.print(',');
+  Serial.print(prevCount);
   Serial.println();
 
   //move steps
