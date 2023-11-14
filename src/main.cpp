@@ -75,7 +75,7 @@ void serialCommunicate(){
     //loading and shooting values write to arduino
     if(values[4] > prevCount){
       shooter.shoot();
-      prevCount = values[4] = 0;
+      prevCount = values[4];
     }
   }
   //read from the motor
