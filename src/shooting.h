@@ -14,13 +14,13 @@ public:
 
 protected:
     //solenoid pin
-    int Solenoid = ;//pin value 
+    int Solenoid = 50;//pin value 
     
     //motors
-    int IN1 = ;//1
-    int IN2 = ;//2
-    int IN3 = ;//3
-    int IN4 = ;//4
+    int IN1 = 42;//1
+    int IN2 = 44;//2
+    int IN3 = 46;//3
+    int IN4 = 48;//4
 
     Stepper myStepper;// Declare Stepper instance as a member variable
 };
