@@ -87,6 +87,8 @@ void serialCommunicate(){
   Serial.print(reading.step3);
   Serial.print(',');
   Serial.print(reading.step4);
+  Serial.print(',');
+  Serial.print(prevCount);
   Serial.println();
 
   //move steps
